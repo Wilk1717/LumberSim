@@ -4,6 +4,7 @@ import com.forest.simulation.core.Board;
 import com.forest.simulation.core.Cell;
 
 public abstract class Lumberjack extends Agent {
+    //Parametry drwala
     protected int capital;
     protected int livingCost;
     protected int cuttingRange;
@@ -11,7 +12,7 @@ public abstract class Lumberjack extends Agent {
     protected int regrowthTime;
     protected int treeValue;
 
-
+    //Konstruktor drwala
     public Lumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue) {
         super(startX, startY, board);
         this.visionRange = visionRange;
@@ -20,11 +21,14 @@ public abstract class Lumberjack extends Agent {
         this.treeValue = treeValue;
     }
 
+    //Ścięcie drzewa
     public void harvest(Cell targetCell) {
-
         targetCell.chopDown(this.regrowthTime);
     }
 
-    public void payCosts() { }
-    public void checkBankruptcy() { }
+    //Koszty codziennego utrzymania
+    public void payCosts() { }                                                                                          //TODO: napisać tą metodę
+
+    //Sprawdzenie, czy kapitał drwala nie spadł poniżej 0
+    public void checkBankruptcy() { }                                                                                   //TODO: napisać tą metodę
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Simulation {
+    //Parametry symulacji
     private int forestDensity;
     private int regrowthTime;
     private int fineAmount;
@@ -21,6 +22,7 @@ public class Simulation {
     private List<Agent> agents;
     private int tick;
 
+    //Konstruktor symulacji
     public Simulation(int width, int height) {
         this.board = new Board(width, height);
         this.agents = new ArrayList<>();
@@ -30,6 +32,7 @@ public class Simulation {
         this.regrowthTime = 6;
     }
 
+    //Rozpoczęcie symulacji
     public void setup() {
         Random rand = new Random();
 
@@ -47,6 +50,7 @@ public class Simulation {
         agents.add(new EcologicalLumberjack(startX, startY, board, 3, 0, this.regrowthTime, 0));
     }
 
+    //Wykonanie jednego ticku symulacji
     public void step() {
         for (Agent agent : agents) {
             agent.findTarget();
@@ -60,6 +64,7 @@ public class Simulation {
         tick++;
     }
 
+    //Testowy wydruk planszy w konsoli
     public void printBoard() {
         System.out.println("Tick " + tick);
 
@@ -75,7 +80,7 @@ public class Simulation {
                 }
 
                 if (isAgentHere) {
-                    System.out.print("L ");
+                    System.out.print("@ ");
                 } else {
                     Cell cell = board.getCell(x, y);
                     if (cell.getState().equals("Tree")) {
@@ -90,6 +95,7 @@ public class Simulation {
         System.out.println();
     }
 
+    //Main
     public static void main(String[] args) {
         Simulation sim = new Simulation(15, 15);
         sim.setup();
