@@ -95,7 +95,7 @@ public class Simulation {
         sim.setup();
         sim.printBoard();
 
-        for(int i = 0; i < 15; i++) {
+        for(int i = 0; i < 100; i++) {
             sim.step();
             sim.printBoard();
         }

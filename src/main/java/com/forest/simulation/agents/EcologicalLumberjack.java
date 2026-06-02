@@ -14,20 +14,35 @@ public class EcologicalLumberjack extends Lumberjack {
     public void findTarget() {
         Cell currentCell = board.getCell(this.x, this.y);
 
-
         if (currentCell.getState().equals("Tree")) {
             harvest(currentCell);
-            return;
         }
-
 
         List<Cell> neighbors = board.getNeighbors(this.x, this.y, this.visionRange);
 
+        Cell closestTree = null;
+        int minDistance = Integer.MAX_VALUE;
+
         for (Cell neighbor : neighbors) {
             if (neighbor.getState().equals("Tree")) {
-                moveToTarget(neighbor);
-                return;
+                int dx = Math.abs(neighbor.getX() - this.x);
+                if (dx > board.getWidth() / 2) dx = board.getWidth() - dx;
+
+                int dy = Math.abs(neighbor.getY() - this.y);
+                if (dy > board.getHeight() / 2) dy = board.getHeight() - dy;
+
+                int distance = dx + dy;
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestTree = neighbor;
+                }
             }
+        }
+
+        if (closestTree != null) {
+            moveToTarget(closestTree);
+            return;
         }
 
         moveRandomly();
