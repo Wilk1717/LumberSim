@@ -1,7 +1,5 @@
 package com.forest.simulation.core;
 
-import com.forest.simulation.core.Cell;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +24,11 @@ public class Board {
         return grid[wrappedX][wrappedY];
     }
 
-    public List<Cell> getNeighbors(int centerX, int centerY, int radius) {
+    public List<Cell> getNeighbors(int x, int y, int range) {
         List<Cell> visibleCells = new ArrayList<>();
 
-        for (int i = centerX - radius; i <= centerX + radius; i++) {
-            for (int j = centerY - radius; j <= centerY + radius; j++) {
+        for (int i = x - range; i <= x + range; i++) {
+            for (int j = y - range; j <= y + range; j++) {
 
                 int wrappedX = wrapCoordinate(i, width);
                 int wrappedY = wrapCoordinate(j, height);
