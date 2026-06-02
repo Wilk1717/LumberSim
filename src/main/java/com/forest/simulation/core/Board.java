@@ -2,6 +2,7 @@ package com.forest.simulation.core;
 
 import com.forest.simulation.core.Cell;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
@@ -25,8 +26,25 @@ public class Board {
         return grid[wrappedX][wrappedY];
     }
 
-    public List<Cell> getNeighbors(int x, int y, int radius) {                          //TODO: napisać ta funkcję
-        return null;
+    public List<Cell> getNeighbors(int centerX, int centerY, int radius) {
+        List<Cell> visibleCells = new ArrayList<>();
+
+        for (int i = centerX - radius; i <= centerX + radius; i++) {
+            for (int j = centerY - radius; j <= centerY + radius; j++) {
+
+                int wrappedX = wrapCoordinate(i, width);
+                int wrappedY = wrapCoordinate(j, height);
+
+                visibleCells.add(grid[wrappedX][wrappedY]);
+            }
+        }
+        return visibleCells;
+    }
+
+    public void setCell(int x, int y, Cell cell) {
+        int wrappedX = wrapCoordinate(x, width);
+        int wrappedY = wrapCoordinate(y, height);
+        grid[wrappedX][wrappedY] = cell;
     }
 
     public int getWidth() { return width; }

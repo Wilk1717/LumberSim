@@ -25,10 +25,10 @@ public class Cell {
     public void grow() {
         if (this.regrowthCountdown > 0) {
             this.regrowthCountdown--;
-        }
 
-        if (this.regrowthCountdown == 0) {
-            this.state = "Tree";
+            if (this.regrowthCountdown == 0) {
+                this.state = "Tree";
+            }
         }
     }
 
