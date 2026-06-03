@@ -41,13 +41,11 @@ public class EcologicalLumberjack extends Lumberjack {
             }
         }
 
-        //Wykonanie kroku w stronę drzewa
         if (closestTree != null) {
             moveToTarget(closestTree);
             return;
         }
 
-        //W przypadku braku drzew w zasięgu wzroku, wykonanie losowego kroku
         moveRandomly();
     }
 }
