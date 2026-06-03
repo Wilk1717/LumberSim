@@ -32,7 +32,7 @@ public class EcologicalLumberjack extends Lumberjack {
                 int dy = Math.abs(neighbor.getY() - this.y);
                 if (dy > board.getHeight() / 2) dy = board.getHeight() - dy;
 
-                int distance = Math.max(Math.abs(dx), Math.abs(dy));
+                int distance = dx + dy;
 
                 if (distance < minDistance) {
                     minDistance = distance;
