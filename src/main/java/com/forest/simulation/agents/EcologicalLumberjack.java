@@ -19,7 +19,6 @@ public class EcologicalLumberjack extends Lumberjack {
             harvest(currentCell);
         }
 
-        //Skanowanie otoczenia w poszukiwaniu kolejnego drzewa
         List<Cell> neighbors = board.getNeighbors(this.x, this.y, this.visionRange);
 
         Cell closestTree = null;
