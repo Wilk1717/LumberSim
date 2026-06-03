@@ -10,7 +10,6 @@ public class EcologicalLumberjack extends Lumberjack {
         super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue);
     }
 
-    //Cykl drwala pozwalający ściąć drzewo, następnie namierzyć kolejne i zrobić krok w jego stronę w jednym ticku
     @Override
     public void findTarget() {
         Cell currentCell = board.getCell(this.x, this.y);
