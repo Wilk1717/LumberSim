@@ -15,7 +15,6 @@ public class EcologicalLumberjack extends Lumberjack {
     public void findTarget() {
         Cell currentCell = board.getCell(this.x, this.y);
 
-        //Ścięcie drzewa, jeśli drwal na nim stoi
         if (currentCell.getState().equals("Tree")) {
             harvest(currentCell);
         }
@@ -26,6 +25,7 @@ public class EcologicalLumberjack extends Lumberjack {
         Cell closestTree = null;
         int minDistance = Integer.MAX_VALUE;
 
+        //Szukanie najbliższego możliwego drzewa
         for (Cell neighbor : neighbors) {
             if (neighbor.getState().equals("Tree")) {
                 int dx = Math.abs(neighbor.getX() - this.x);
