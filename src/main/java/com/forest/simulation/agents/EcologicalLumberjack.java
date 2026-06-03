@@ -5,7 +5,7 @@ import com.forest.simulation.core.Cell;
 import java.util.List;
 
 public class EcologicalLumberjack extends Lumberjack {
-    //Konstruktor ekologicznego drwala
+
     public EcologicalLumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue) {
         super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue);
     }
