@@ -23,7 +23,7 @@ public class EcologicalLumberjack extends Lumberjack {
         Cell closestTree = null;
         int minDistance = Integer.MAX_VALUE;
 
-        //Szukanie najbliższego możliwego drzewa
+
         for (Cell neighbor : neighbors) {
             if (neighbor.getState().equals("Tree")) {
                 int dx = Math.abs(neighbor.getX() - this.x);
@@ -32,7 +32,8 @@ public class EcologicalLumberjack extends Lumberjack {
                 int dy = Math.abs(neighbor.getY() - this.y);
                 if (dy > board.getHeight() / 2) dy = board.getHeight() - dy;
 
-                int distance = dx + dy;
+                int distance = Math.max(Math.abs(dx), Math.abs(dy));
+
 
                 if (distance < minDistance) {
                     minDistance = distance;
