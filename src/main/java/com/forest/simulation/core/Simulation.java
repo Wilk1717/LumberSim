@@ -104,6 +104,12 @@ public class Simulation {
         for(int i = 0; i < 100; i++) {
             sim.step();
             sim.printBoard();
+
+            try {
+                Thread.sleep(750);
+            } catch (InterruptedException e) {
+                System.out.println("Symulacja przerwana ");
+            }
         }
     }
 }
