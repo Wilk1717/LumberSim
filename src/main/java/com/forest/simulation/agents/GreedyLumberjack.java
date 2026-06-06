@@ -6,8 +6,8 @@ import java.util.List;
 
 public class GreedyLumberjack extends Lumberjack {
 
-    public GreedyLumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue) {
-        super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue);
+    public GreedyLumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue, int  livingCost, int cuttingRange) {
+        super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue,  livingCost, cuttingRange);
     }
 
     @Override
