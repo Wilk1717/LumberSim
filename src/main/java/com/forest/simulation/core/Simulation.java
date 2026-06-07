@@ -1,9 +1,9 @@
 package com.forest.simulation.core;
 
 import com.forest.simulation.agents.Agent;
+import com.forest.simulation.agents.EcologicalLumberjack;
 import com.forest.simulation.agents.ForestRanger;
 import com.forest.simulation.agents.GreedyLumberjack;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +32,11 @@ public class Simulation {
 
         this.forestDensity = 50;
         this.regrowthTime = 6;
+
+
+        this.cooldownParameter = 15;
+        this.rangerPatrolParameter = 8;
+        this.fineAmount = 50;
     }
 
     //Rozpoczęcie symulacji
@@ -46,9 +51,9 @@ public class Simulation {
                 board.setCell(x, y, cell);
             }
         }
-
-        agents.add(new GreedyLumberjack(2, 2, board, 3, 100, this.regrowthTime, 10, 0, 0));
-        agents.add(new ForestRanger(12, 12, board, 8, 50, agents));
+        agents.add(new EcologicalLumberjack(10, 10, board, 3, 100, this.regrowthTime, 10,0,0));
+        agents.add(new GreedyLumberjack(2, 2, board, 3, 100, this.regrowthTime, 10));
+        agents.add(new ForestRanger(12, 12, board, this.rangerPatrolParameter, this.fineAmount, this.cooldownParameter, agents));
     }
 
     //Wykonanie jednego ticku symulacji
@@ -84,7 +89,9 @@ public class Simulation {
                     System.out.print("S ");
                 } else if (foundAgent instanceof GreedyLumberjack) {
                     System.out.print("@ ");
-                } else {
+                }else if (foundAgent instanceof EcologicalLumberjack){
+                    System.out.print("$ ");
+                }else {
                     Cell cell = board.getCell(x, y);
                     if (cell.getState().equals("Tree")) {
                         System.out.print("T ");

@@ -7,20 +7,22 @@ import java.util.List;
 public class ForestRanger extends Agent {
     private int patrolRange;
     private int fineAmount;
+    private int penaltyCooldown;
     private List<Agent> allAgents;
     private GreedyLumberjack lockedTarget;
 
-    public ForestRanger(int startX, int startY, Board board, int patrolRange, int fineAmount, List<Agent> allAgents) {
+    public ForestRanger(int startX, int startY, Board board, int patrolRange, int fineAmount, int penaltyCooldown, List<Agent> allAgents) {
         super(startX, startY, board);
         this.patrolRange = patrolRange;
         this.fineAmount = fineAmount;
+        this.penaltyCooldown = penaltyCooldown;
         this.allAgents = allAgents;
         this.lockedTarget = null;
     }
 
     @Override
     public void findTarget() {
-        if (lockedTarget != null && !allAgents.contains(lockedTarget)) {
+        if (lockedTarget != null && (!allAgents.contains(lockedTarget) || lockedTarget.isOnCooldown())) {
             lockedTarget = null;
         }
 
@@ -30,6 +32,8 @@ public class ForestRanger extends Agent {
             for (Agent agent : allAgents) {
                 if (agent instanceof GreedyLumberjack) {
                     GreedyLumberjack greedy = (GreedyLumberjack) agent;
+
+                    if (greedy.isOnCooldown()) continue;
 
                     int dx = Math.abs(greedy.getX() - this.x);
                     if (dx > board.getWidth() / 2) dx = board.getWidth() - dx;
@@ -62,7 +66,8 @@ public class ForestRanger extends Agent {
 
                 if (newDistance <= 1) {
                     lockedTarget.capital -= this.fineAmount;
-                    System.out.println("!!! Mandat !!!");
+                    lockedTarget.setCooldown(this.penaltyCooldown);
+                    System.out.println("Mandat");
                     lockedTarget = null;
                     break;
                 }

@@ -6,12 +6,31 @@ import java.util.List;
 
 public class GreedyLumberjack extends Lumberjack {
 
-    public GreedyLumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue, int  livingCost, int cuttingRange) {
-        super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue,  livingCost, cuttingRange);
+
+    private int cooldown = 0;
+
+    public GreedyLumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue) {
+        super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue, 0, 0);
+    }
+    public boolean isOnCooldown() {
+        return cooldown > 0;
+    }
+
+
+    public void setCooldown(int ticks) {
+        this.cooldown = ticks;
     }
 
     @Override
     public void findTarget() {
+
+        if (cooldown > 0) {
+            cooldown--;
+            moveRandomly();
+            return;
+        }
+
+
         List<Cell> neighbors = board.getNeighbors(this.x, this.y, this.visionRange);
 
         Cell bestTree = null;
@@ -64,14 +83,12 @@ public class GreedyLumberjack extends Lumberjack {
             moveRandomly();
         }
 
-
         Cell currentCell = board.getCell(this.x, this.y);
 
         if (currentCell.getState().equals("Tree")) {
             List<Cell> cuttingArea = board.getNeighbors(this.x, this.y, 1);
 
             for (Cell target : cuttingArea) {
-
                 if (target.getState().equals("Tree")) {
                     harvest(target);
                 }
