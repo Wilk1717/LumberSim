@@ -1,9 +1,6 @@
 package com.forest.simulation.core;
 
-import com.forest.simulation.agents.Agent;
-import com.forest.simulation.agents.EcologicalLumberjack;
-import com.forest.simulation.agents.ForestRanger;
-import com.forest.simulation.agents.GreedyLumberjack;
+import com.forest.simulation.agents.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +30,9 @@ public class Simulation {
         this.forestDensity = 50;
         this.regrowthTime = 6;
 
-
-        this.cooldownParameter = 15;
-        this.rangerPatrolParameter = 8;
-        this.fineAmount = 50;
+        this.cooldownParameter = 10;
+        this.rangerPatrolParameter = 5;
+        this.fineAmount = 30;
     }
 
     //Rozpoczęcie symulacji
@@ -51,8 +47,8 @@ public class Simulation {
                 board.setCell(x, y, cell);
             }
         }
-        agents.add(new EcologicalLumberjack(10, 10, board, 3, 100, this.regrowthTime, 10,0,0));
-        agents.add(new GreedyLumberjack(2, 2, board, 3, 100, this.regrowthTime, 10));
+        agents.add(new EcologicalLumberjack(10, 10, board, 3, 50, this.regrowthTime, 5,2,0));
+        agents.add(new GreedyLumberjack(2, 2, board, 3, 50, this.regrowthTime, 5, 2, 1));
         agents.add(new ForestRanger(12, 12, board, this.rangerPatrolParameter, this.fineAmount, this.cooldownParameter, agents));
     }
 
@@ -61,6 +57,19 @@ public class Simulation {
         for (Agent agent : agents) {
             agent.findTarget();
         }
+
+        agents.removeIf(agent -> {
+            if (agent instanceof Lumberjack) {
+                Lumberjack lumberjack = (Lumberjack) agent;
+                lumberjack.payCosts();
+
+                if (lumberjack.checkBankruptcy()) {
+                    System.out.println("Bankructwo drwala");
+                    return true;
+                }
+            }
+            return false;
+        });
 
         for (int x = 0; x < board.getWidth(); x++) {
             for (int y = 0; y < board.getHeight(); y++) {
@@ -86,7 +95,7 @@ public class Simulation {
                 }
 
                 if (foundAgent instanceof ForestRanger) {
-                    System.out.print("S ");
+                    System.out.print("# ");
                 } else if (foundAgent instanceof GreedyLumberjack) {
                     System.out.print("@ ");
                 }else if (foundAgent instanceof EcologicalLumberjack){
@@ -111,7 +120,7 @@ public class Simulation {
         sim.setup();
         sim.printBoard();
 
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 50; i++) {
             sim.step();
             sim.printBoard();
 

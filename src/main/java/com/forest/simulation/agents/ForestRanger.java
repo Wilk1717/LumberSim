@@ -35,13 +35,7 @@ public class ForestRanger extends Agent {
 
                     if (greedy.isOnCooldown()) continue;
 
-                    int dx = Math.abs(greedy.getX() - this.x);
-                    if (dx > board.getWidth() / 2) dx = board.getWidth() - dx;
-
-                    int dy = Math.abs(greedy.getY() - this.y);
-                    if (dy > board.getHeight() / 2) dy = board.getHeight() - dy;
-
-                    int distance = Math.max(dx, dy);
+                    int distance = board.calculateDistance(this.x, this.y, greedy.getX(), greedy.getY());
 
                     if (distance <= this.patrolRange && distance < minDistance) {
                         minDistance = distance;
@@ -56,13 +50,7 @@ public class ForestRanger extends Agent {
                 Cell targetCell = board.getCell(lockedTarget.getX(), lockedTarget.getY());
                 moveToTarget(targetCell);
 
-                int newDx = Math.abs(lockedTarget.getX() - this.x);
-                if (newDx > board.getWidth() / 2) newDx = board.getWidth() - newDx;
-
-                int newDy = Math.abs(lockedTarget.getY() - this.y);
-                if (newDy > board.getHeight() / 2) newDy = board.getHeight() - newDy;
-
-                int newDistance = Math.max(newDx, newDy);
+                int newDistance = board.calculateDistance(this.x, this.y, lockedTarget.getX(), lockedTarget.getY());
 
                 if (newDistance <= 1) {
                     lockedTarget.capital -= this.fineAmount;

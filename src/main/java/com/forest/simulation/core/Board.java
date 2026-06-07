@@ -51,6 +51,27 @@ public class Board {
         grid[wrappedX][wrappedY] = cell;
     }
 
+    //Sprawdzenie obecności dorosłego drzewa w sąsiedztwie komórki
+    public boolean hasAdultTreeNeighbor(int x, int y) {
+        List<Cell> neighbors = getNeighbors(x, y, 1);
+        for (Cell neighbor : neighbors) {
+            if (neighbor.getState().equals("Tree")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int calculateDistance(int x1, int y1, int x2, int y2) {
+        int dx = Math.abs(x2 - x1);
+        if (dx > this.width / 2) dx = this.width - dx;
+
+        int dy = Math.abs(y2 - y1);
+        if (dy > this.height / 2) dy = this.height - dy;
+
+        return Math.max(dx, dy);
+    }
+
     //Gettery
     public int getWidth() { return width; }
     public int getHeight() { return height; }

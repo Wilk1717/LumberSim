@@ -24,9 +24,15 @@ public abstract class Lumberjack extends Agent {
     }
 
     //Ścięcie drzewa
-    public void harvest(Cell targetCell) {
-        targetCell.chopDown(this.regrowthTime);
+    public void harvest(Cell target) {
         this.capital += this.treeValue;
+
+        target.setState("Empty");
+        if (board.hasAdultTreeNeighbor(target.getX(), target.getY())) {
+            target.chopDown(this.regrowthTime);
+        } else {
+            target.chopDown(0);
+        }
     }
 
     //Koszty codziennego utrzymania

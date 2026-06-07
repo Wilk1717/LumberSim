@@ -6,16 +6,15 @@ import java.util.List;
 
 public class GreedyLumberjack extends Lumberjack {
 
-
     private int cooldown = 0;
 
-    public GreedyLumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue) {
-        super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue, 0, 0);
+    public GreedyLumberjack(int startX, int startY, Board board, int visionRange, int initialCapital, int regrowthTime, int treeValue, int livingCost, int cuttingRange) {
+        super(startX, startY, board, visionRange, initialCapital, regrowthTime, treeValue, livingCost, cuttingRange);
     }
+
     public boolean isOnCooldown() {
         return cooldown > 0;
     }
-
 
     public void setCooldown(int ticks) {
         this.cooldown = ticks;
@@ -30,7 +29,6 @@ public class GreedyLumberjack extends Lumberjack {
             return;
         }
 
-
         List<Cell> neighbors = board.getNeighbors(this.x, this.y, this.visionRange);
 
         Cell bestTree = null;
@@ -40,13 +38,7 @@ public class GreedyLumberjack extends Lumberjack {
         for (Cell neighbor : neighbors) {
             if (neighbor.getState().equals("Tree")) {
 
-                int distToNeighborX = Math.abs(neighbor.getX() - this.x);
-                if (distToNeighborX > board.getWidth() / 2) distToNeighborX = board.getWidth() - distToNeighborX;
-
-                int distToNeighborY = Math.abs(neighbor.getY() - this.y);
-                if (distToNeighborY > board.getHeight() / 2) distToNeighborY = board.getHeight() - distToNeighborY;
-
-                int distanceToNeighbor = Math.max(distToNeighborX, distToNeighborY);
+                int distanceToNeighbor = board.calculateDistance(this.x, this.y, neighbor.getX(), neighbor.getY());
 
                 List<Cell> clusterCheck = board.getNeighbors(neighbor.getX(), neighbor.getY(), 1);
                 int clusterSize = 0;
@@ -54,13 +46,7 @@ public class GreedyLumberjack extends Lumberjack {
                 for (Cell clusterCell : clusterCheck) {
                     if (clusterCell.getState().equals("Tree")) {
 
-                        int dx = Math.abs(clusterCell.getX() - this.x);
-                        if (dx > board.getWidth() / 2) dx = board.getWidth() - dx;
-
-                        int dy = Math.abs(clusterCell.getY() - this.y);
-                        if (dy > board.getHeight() / 2) dy = board.getHeight() - dy;
-
-                        int distanceToLumberjack = Math.max(dx, dy);
+                        int distanceToLumberjack = board.calculateDistance(this.x, this.y, clusterCell.getX(), clusterCell.getY());
 
                         if (distanceToLumberjack <= this.visionRange) {
                             clusterSize++;
@@ -76,7 +62,6 @@ public class GreedyLumberjack extends Lumberjack {
             }
         }
 
-
         if (bestTree != null) {
             moveToTarget(bestTree);
         } else {
@@ -84,14 +69,14 @@ public class GreedyLumberjack extends Lumberjack {
         }
 
         Cell currentCell = board.getCell(this.x, this.y);
-
         if (currentCell.getState().equals("Tree")) {
-            List<Cell> cuttingArea = board.getNeighbors(this.x, this.y, 1);
+            harvest(currentCell);
+        }
 
-            for (Cell target : cuttingArea) {
-                if (target.getState().equals("Tree")) {
-                    harvest(target);
-                }
+        List<Cell> cuttingArea = board.getNeighbors(this.x, this.y, this.cuttingRange);
+        for (Cell target : cuttingArea) {
+            if (target.getState().equals("Tree")) {
+                harvest(target);
             }
         }
     }

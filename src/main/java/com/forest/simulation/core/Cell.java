@@ -21,11 +21,6 @@ public class Cell {
         this.regrowthCountdown = regrowthTime;
     }
 
-    //Sprawdzenie obecności dorosłego drzewa w sąsiedztwie komórki
-    public boolean hasAdultTreeNeighbor(Board board) {
-        return false;                                                                                                   //TODO: napisać tą metodę
-    }
-
     //Licznik odrastania ściętego drzewa
     public void grow() {
         if (this.regrowthCountdown > 0) {
@@ -37,10 +32,13 @@ public class Cell {
         }
     }
 
+    public void setState(String state) {
+        this.state = state;
+    }
+
     //Gettery
     public int getX() { return x; }
     public int getY() { return y; }
     public String getState() { return state; }
-    public int getRegrowthCountdown() { return regrowthCountdown; }
 }
 
