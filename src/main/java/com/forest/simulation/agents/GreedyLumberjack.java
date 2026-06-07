@@ -12,12 +12,6 @@ public class GreedyLumberjack extends Lumberjack {
 
     @Override
     public void findTarget() {
-        Cell currentCell = board.getCell(this.x, this.y);
-
-        if (currentCell.getState().equals("Tree")) {
-            harvest(currentCell);
-        }
-
         List<Cell> neighbors = board.getNeighbors(this.x, this.y, this.visionRange);
 
         Cell bestTree = null;
@@ -64,7 +58,24 @@ public class GreedyLumberjack extends Lumberjack {
         }
 
 
+        if (bestTree != null) {
+            moveToTarget(bestTree);
+        } else {
+            moveRandomly();
+        }
 
-        moveRandomly();
+
+        Cell currentCell = board.getCell(this.x, this.y);
+
+        if (currentCell.getState().equals("Tree")) {
+            List<Cell> cuttingArea = board.getNeighbors(this.x, this.y, 1);
+
+            for (Cell target : cuttingArea) {
+
+                if (target.getState().equals("Tree")) {
+                    harvest(target);
+                }
+            }
+        }
     }
 }

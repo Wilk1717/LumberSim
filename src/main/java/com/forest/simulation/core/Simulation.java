@@ -2,6 +2,7 @@ package com.forest.simulation.core;
 
 import com.forest.simulation.agents.Agent;
 import com.forest.simulation.agents.EcologicalLumberjack;
+import com.forest.simulation.agents.GreedyLumberjack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +29,8 @@ public class Simulation {
         this.agents = new ArrayList<>();
         this.tick = 0;
 
-        this.forestDensity = 20;
-        this.regrowthTime = 10;
-        this.initialCapital = 100;
-        this.livingCostParameter = 1;
+        this.forestDensity = 50;
+        this.regrowthTime = 6;
     }
 
     //Rozpoczęcie symulacji
@@ -49,7 +48,7 @@ public class Simulation {
 
         int startX = board.getWidth() / 2;
         int startY = board.getHeight() / 2;
-        agents.add(new EcologicalLumberjack(startX, startY, board, 3, this.initialCapital, this.regrowthTime, 0, this.livingCostParameter, 0));
+        agents.add(new GreedyLumberjack(startX, startY, board, 3, 0, this.regrowthTime, 0, 0, 0));
     }
 
     //Wykonanie jednego ticku symulacji
