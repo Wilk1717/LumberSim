@@ -14,6 +14,7 @@ import java.util.List;
 public class SimulationUI extends JFrame {
     private Simulation sim;
     private BoardPanel boardPanel;
+    private JTextArea statsArea;
     private Timer timer;
 
     public SimulationUI(Simulation sim) {
@@ -24,17 +25,71 @@ public class SimulationUI extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
         boardPanel = new BoardPanel();
-        add(boardPanel);
+        add(boardPanel, BorderLayout.CENTER);
+
+        statsArea = new JTextArea(5, 50);
+        statsArea.setEditable(false);
+        statsArea.setFont(new Font("Monospaced", Font.BOLD, 22));
+        statsArea.setBackground(new Color(25, 25, 25));
+        statsArea.setForeground(new Color(220, 220, 220));
+        statsArea.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+
+        add(statsArea, BorderLayout.SOUTH);
 
         timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sim.step();
                 boardPanel.repaint();
+                updateStats();
             }
         });
+    }
+
+    private void updateStats() {
+        int ecoCount = 0;
+        int greedyCount = 0;
+        int ecoCapitalSum = 0;
+        int greedyCapitalSum = 0;
+
+        for (Agent agent : sim.getAgents()) {
+            if (agent instanceof EcologicalLumberjack) {
+                ecoCount++;
+                ecoCapitalSum += ((EcologicalLumberjack) agent).getCapital();
+            } else if (agent instanceof GreedyLumberjack) {
+                greedyCount++;
+                greedyCapitalSum += ((GreedyLumberjack) agent).getCapital();
+            }
+        }
+
+        int ecoAvg = (ecoCount > 0) ? (ecoCapitalSum / ecoCount) : 0;
+        int greedyAvg = (greedyCount > 0) ? (greedyCapitalSum / greedyCount) : 0;
+
+        Board board = sim.getBoard();
+        int totalCells = board.getWidth() * board.getHeight();
+        int treeCount = 0;
+
+        for (int x = 0; x < board.getWidth(); x++) {
+            for (int y = 0; y < board.getHeight(); y++) {
+                if (board.getCell(x, y).getState().equals("Tree")) {
+                    treeCount++;
+                }
+            }
+        }
+
+        int forestation = (int) (((double) treeCount / totalCells) * 100);
+
+        String text = String.format(
+                        "ECO DRWALE      Populacja: %d  |  Średni majątek: %d$\n\n" +
+                        "CHCIWI DRWALE   Populacja: %d  |  Średni majątek: %d$\n\n" +
+                        "POZIOM ZALESIENIA: %d%%",
+                ecoCount, ecoAvg, greedyCount, greedyAvg, forestation
+        );
+
+        statsArea.setText(text);
     }
 
     public void start() {

@@ -1,11 +1,11 @@
 package com.forest.simulation.core;
 
 public class SimulationParameters {
-    private int forestDensity = 50;
+    private int forestDensity = 20;
     private int regrowthTime = 20;
     private int penaltyCooldown = 15;
-    private int numEcologicalLumberjacks = 2;
-    private int numGreedyLumberjacks = 2;
+    private int numEcologicalLumberjacks = 10;
+    private int numGreedyLumberjacks = 8;
     private int numForestRangers = 1;
     private int agentVisionRange = 3;
     private int livingCost = 5;

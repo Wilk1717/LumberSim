@@ -44,4 +44,8 @@ public abstract class Lumberjack extends Agent {
     public boolean checkBankruptcy() {
         return this.capital < 0;
     }
+
+    public int getCapital() {
+        return this.capital;
+    }
 }
