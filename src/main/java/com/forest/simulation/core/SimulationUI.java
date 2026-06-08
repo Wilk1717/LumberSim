@@ -1,9 +1,15 @@
 package com.forest.simulation.core;
 
+import com.forest.simulation.agents.Agent;
+import com.forest.simulation.agents.EcologicalLumberjack;
+import com.forest.simulation.agents.ForestRanger;
+import com.forest.simulation.agents.GreedyLumberjack;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class SimulationUI extends JFrame {
     private Simulation sim;
@@ -13,7 +19,7 @@ public class SimulationUI extends JFrame {
     public SimulationUI(Simulation sim) {
         this.sim = sim;
 
-        setTitle("Symulacja ");
+        setTitle("Symulacja Lasu");
         setSize(1920, 1080);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,6 +47,7 @@ public class SimulationUI extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Board board = sim.getBoard();
+            List<Agent> agents = sim.getAgents();
 
             if (board == null) return;
 
@@ -64,6 +71,22 @@ public class SimulationUI extends JFrame {
 
                     g.setColor(new Color(0, 100, 0, 40));
                     g.drawRect(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                }
+            }
+
+            for (Agent agent : agents) {
+                int ax = agent.getX() * cellWidth;
+                int ay = agent.getY() * cellHeight;
+
+                if (agent instanceof ForestRanger) {
+                    g.setColor(Color.BLUE);
+                    g.fillOval(ax + cellWidth/4, ay + cellHeight/4, cellWidth/2, cellHeight/2);
+                } else if (agent instanceof GreedyLumberjack) {
+                    g.setColor(Color.RED);
+                    g.fillOval(ax + cellWidth/4, ay + cellHeight/4, cellWidth/2, cellHeight/2);
+                } else if (agent instanceof EcologicalLumberjack) {
+                    g.setColor(Color.YELLOW);
+                    g.fillOval(ax + cellWidth/4, ay + cellHeight/4, cellWidth/2, cellHeight/2);
                 }
             }
         }
