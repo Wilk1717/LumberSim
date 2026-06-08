@@ -2,6 +2,7 @@ package com.forest.simulation.agents;
 
 import com.forest.simulation.core.Board;
 import com.forest.simulation.core.Cell;
+import java.util.Collections; // DODANY IMPORT
 import java.util.List;
 
 public class EcologicalLumberjack extends Lumberjack {
@@ -17,13 +18,16 @@ public class EcologicalLumberjack extends Lumberjack {
 
         //Skanowanie otoczenia w poszukiwaniu kolejnych drzew w polu widzenia
         List<Cell> neighbors = board.getNeighbors(this.x, this.y, this.visionRange);
+
+        Collections.shuffle(neighbors);
+
         Cell closestTree = null;
         int minDistance = Integer.MAX_VALUE;
 
         //Filtrowanie wszystkich widocznych komórek w celu znalezienia najbliższego drzewa
         for (Cell neighbor : neighbors) {
             if (neighbor.getState().equals("Tree")) {
-                
+
                 int distance = board.calculateDistance(this.x, this.y, neighbor.getX(), neighbor.getY());
 
                 if (distance < minDistance) {

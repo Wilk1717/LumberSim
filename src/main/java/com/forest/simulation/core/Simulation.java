@@ -125,23 +125,25 @@ public class Simulation {
         System.out.println();
     }
 
-    //Main
+
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public List<Agent> getAgents() {
+        return this.agents;
+    }
+
+
     public static void main(String[] args) {
         SimulationParameters defaultParams = new SimulationParameters();
 
-        Simulation sim = new Simulation(15, 15, defaultParams);
+        Simulation sim = new Simulation(96, 54, defaultParams);
         sim.setup();
-        sim.printBoard();
 
-        for(int i = 0; i < 50; i++) {
-            sim.step();
-            sim.printBoard();
-
-            try {
-                Thread.sleep(750);
-            } catch (InterruptedException e) {
-                System.out.println("Symulacja przerwana ");
-            }
-        }
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            SimulationUI ui = new SimulationUI(sim);
+            ui.start();
+        });
     }
 }
