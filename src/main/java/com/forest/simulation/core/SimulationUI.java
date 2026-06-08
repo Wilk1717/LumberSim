@@ -30,7 +30,7 @@ public class SimulationUI extends JFrame {
         boardPanel = new BoardPanel();
         add(boardPanel, BorderLayout.CENTER);
 
-        statsArea = new JTextArea(5, 50);
+        statsArea = new JTextArea(7, 50);
         statsArea.setEditable(false);
         statsArea.setFont(new Font("Monospaced", Font.BOLD, 22));
         statsArea.setBackground(new Color(25, 25, 25));
@@ -39,7 +39,7 @@ public class SimulationUI extends JFrame {
 
         add(statsArea, BorderLayout.SOUTH);
 
-        timer = new Timer(500, new ActionListener() {
+        timer = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sim.step();
@@ -79,14 +79,15 @@ public class SimulationUI extends JFrame {
                 }
             }
         }
-
+        int currentTick = sim.getTick();
         int forestation = (int) (((double) treeCount / totalCells) * 100);
 
         String text = String.format(
+                        "TICK SYMULACJI: %d\n\n" +
                         "ECO DRWALE      Populacja: %d  |  Średni majątek: %d$\n\n" +
                         "CHCIWI DRWALE   Populacja: %d  |  Średni majątek: %d$\n\n" +
                         "POZIOM ZALESIENIA: %d%%",
-                ecoCount, ecoAvg, greedyCount, greedyAvg, forestation
+                currentTick, ecoCount, ecoAvg, greedyCount, greedyAvg, forestation
         );
 
         statsArea.setText(text);

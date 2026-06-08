@@ -90,42 +90,6 @@ public class Simulation {
         tick++;
     }
 
-    //Testowy wydruk planszy w konsoli
-    public void printBoard() {
-        System.out.println("Tick " + tick);
-
-        for (int y = 0; y < board.getHeight(); y++) {
-            for (int x = 0; x < board.getWidth(); x++) {
-
-                Agent foundAgent = null;
-                for (Agent agent : agents) {
-                    if (agent.getX() == x && agent.getY() == y) {
-                        foundAgent = agent;
-                        break;
-                    }
-                }
-
-                if (foundAgent instanceof ForestRanger) {
-                    System.out.print("# ");
-                } else if (foundAgent instanceof GreedyLumberjack) {
-                    System.out.print("@ ");
-                } else if (foundAgent instanceof EcologicalLumberjack){
-                    System.out.print("$ ");
-                } else {
-                    Cell cell = board.getCell(x, y);
-                    if (cell.getState().equals("Tree")) {
-                        System.out.print("T ");
-                    } else {
-                        System.out.print(". ");
-                    }
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-
     public Board getBoard() {
         return this.board;
     }
@@ -134,11 +98,14 @@ public class Simulation {
         return this.agents;
     }
 
+    public int getTick() {
+        return this.tick;
+    }
 
     public static void main(String[] args) {
         SimulationParameters defaultParams = new SimulationParameters();
 
-        Simulation sim = new Simulation(96, 54, defaultParams);
+        Simulation sim = new Simulation(100, 50, defaultParams);
         sim.setup();
 
         javax.swing.SwingUtilities.invokeLater(() -> {
