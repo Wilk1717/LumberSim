@@ -7,49 +7,60 @@ import java.util.List;
 import java.util.Random;
 
 public class Simulation {
-    //Parametry symulacji
-    private int forestDensity;
-    private int regrowthTime;
-    private int fineAmount;
-    private int initialCapital;
-    private int livingCostParameter;
-    private int cooldownParameter;
-    private int lumberjackVisionParameter;
-    private int rangerPatrolParameter;
 
     private Board board;
     private List<Agent> agents;
     private int tick;
+    private SimulationParameters params;
 
     //Konstruktor symulacji
-    public Simulation(int width, int height) {
+    public Simulation(int width, int height, SimulationParameters params) {
         this.board = new Board(width, height);
         this.agents = new ArrayList<>();
         this.tick = 0;
-
-        this.forestDensity = 50;
-        this.regrowthTime = 6;
-
-        this.cooldownParameter = 10;
-        this.rangerPatrolParameter = 5;
-        this.fineAmount = 30;
+        this.params = params;
     }
 
     //Rozpoczęcie symulacji
     public void setup() {
         Random rand = new Random();
 
+        //Las
         for (int x = 0; x < board.getWidth(); x++) {
             for (int y = 0; y < board.getHeight(); y++) {
-                String initialState = rand.nextInt(100) < this.forestDensity ? "Tree" : "Empty";
+                String initialState = rand.nextInt(100) < params.getForestDensity() ? "Tree" : "Empty";
 
                 Cell cell = new Cell(x, y, initialState, 0);
                 board.setCell(x, y, cell);
             }
         }
-        agents.add(new EcologicalLumberjack(10, 10, board, 3, 50, this.regrowthTime, 5,2,0));
-        agents.add(new GreedyLumberjack(2, 2, board, 3, 50, this.regrowthTime, 5, 2, 1));
-        agents.add(new ForestRanger(12, 12, board, this.rangerPatrolParameter, this.fineAmount, this.cooldownParameter, agents));
+
+        //Ekologiczny drwal
+        for (int i = 0; i < params.getNumEcologicalLumberjacks(); i++) {
+            agents.add(new EcologicalLumberjack(
+                    rand.nextInt(board.getWidth()), rand.nextInt(board.getHeight()), board,
+                    params.getAgentVisionRange(), params.getInitialCapital(),
+                    params.getRegrowthTime(), params.getTreeValue(), params.getLivingCost(), 0
+            ));
+        }
+
+        //Chciwy drwal
+        for (int i = 0; i < params.getNumGreedyLumberjacks(); i++) {
+            agents.add(new GreedyLumberjack(
+                    rand.nextInt(board.getWidth()), rand.nextInt(board.getHeight()), board,
+                    params.getAgentVisionRange(), params.getInitialCapital(),
+                    params.getRegrowthTime(), params.getTreeValue(), params.getLivingCost(),
+                    params.getGreedyCuttingRange()
+            ));
+        }
+
+        //Strażnik
+        for (int i = 0; i < params.getNumForestRangers(); i++) {
+            agents.add(new ForestRanger(
+                    rand.nextInt(board.getWidth()), rand.nextInt(board.getHeight()), board,
+                    params.getRangerPatrolRange(), params.getFineAmount(), params.getPenaltyCooldown(), agents
+            ));
+        }
     }
 
     //Wykonanie jednego ticku symulacji
@@ -98,9 +109,9 @@ public class Simulation {
                     System.out.print("# ");
                 } else if (foundAgent instanceof GreedyLumberjack) {
                     System.out.print("@ ");
-                }else if (foundAgent instanceof EcologicalLumberjack){
+                } else if (foundAgent instanceof EcologicalLumberjack){
                     System.out.print("$ ");
-                }else {
+                } else {
                     Cell cell = board.getCell(x, y);
                     if (cell.getState().equals("Tree")) {
                         System.out.print("T ");
@@ -116,7 +127,9 @@ public class Simulation {
 
     //Main
     public static void main(String[] args) {
-        Simulation sim = new Simulation(15, 15);
+        SimulationParameters defaultParams = new SimulationParameters();
+
+        Simulation sim = new Simulation(15, 15, defaultParams);
         sim.setup();
         sim.printBoard();
 
