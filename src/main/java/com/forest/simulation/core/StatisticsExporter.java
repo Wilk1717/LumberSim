@@ -24,7 +24,7 @@ public class StatisticsExporter {
 
     public void logStats(int tick, int ecoAvg, int greedyAvg, int forestation) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            writer.write(tick + "\t" + ecoAvg + "\t\t" + greedyAvg + "\t\t" + forestation + "%\n");
+            writer.write(tick + "\t" + ecoAvg + "\t" + greedyAvg + "\t" + forestation + "%\n");
         } catch (IOException e) {
             System.out.println("Blad: " + e.getMessage());
         }

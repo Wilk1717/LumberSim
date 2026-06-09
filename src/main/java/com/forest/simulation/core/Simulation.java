@@ -93,40 +93,7 @@ public class Simulation {
         return this.tick;
     }
 
-    //Testowy wydruk planszy w konsoli
-    public void printBoard() {
-        System.out.println("Tick " + tick);
 
-        for (int y = 0; y < board.getHeight(); y++) {
-            for (int x = 0; x < board.getWidth(); x++) {
-
-                Agent foundAgent = null;
-                for (Agent agent : agents) {
-                    if (agent.getX() == x && agent.getY() == y) {
-                        foundAgent = agent;
-                        break;
-                    }
-                }
-
-                if (foundAgent instanceof ForestRanger) {
-                    System.out.print("# ");
-                } else if (foundAgent instanceof GreedyLumberjack) {
-                    System.out.print("@ ");
-                } else if (foundAgent instanceof EcologicalLumberjack){
-                    System.out.print("$ ");
-                } else {
-                    Cell cell = board.getCell(x, y);
-                    if (cell.getState().equals("Tree")) {
-                        System.out.print("T ");
-                    } else {
-                        System.out.print(". ");
-                    }
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
 
 
     public Board getBoard() {
