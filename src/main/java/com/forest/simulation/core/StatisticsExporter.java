@@ -16,7 +16,7 @@ public class StatisticsExporter {
         }
 
         try (FileWriter writer = new FileWriter(file, false)) {
-            writer.write("Tick;Sredni Majetek Eco;Sredni Majatek Chciwy;Zalesienie (%)\n");
+            writer.write("Tick\tSredni Majatek Eco\tSredni Majatek Chciwy\tZalesienie (%)\n");
         } catch (IOException e) {
             System.out.println("Blad: " + e.getMessage());
         }
@@ -24,7 +24,7 @@ public class StatisticsExporter {
 
     public void logStats(int tick, int ecoAvg, int greedyAvg, int forestation) {
         try (FileWriter writer = new FileWriter(fileName, true)) {
-            writer.write(tick + ";" + ecoAvg + ";" + greedyAvg + ";" + forestation + "\n");
+            writer.write(tick + "\t" + ecoAvg + "\t\t" + greedyAvg + "\t\t" + forestation + "%\n");
         } catch (IOException e) {
             System.out.println("Blad: " + e.getMessage());
         }
