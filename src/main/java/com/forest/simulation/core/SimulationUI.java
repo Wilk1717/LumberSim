@@ -16,9 +16,12 @@ public class SimulationUI extends JFrame {
     private BoardPanel boardPanel;
     private JTextArea statsArea;
     private Timer timer;
+    private StatisticsExporter exporter;
 
     public SimulationUI(Simulation sim) {
         this.sim = sim;
+
+        this.exporter = new StatisticsExporter("statystyki_symulacji.csv");
 
         setTitle("Symulacja Lasu");
         setSize(1920, 1080);
@@ -39,7 +42,7 @@ public class SimulationUI extends JFrame {
 
         add(statsArea, BorderLayout.SOUTH);
 
-        timer = new Timer(500, new ActionListener() {
+        timer = new Timer(20, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sim.step();
@@ -83,13 +86,15 @@ public class SimulationUI extends JFrame {
         int forestation = (int) (((double) treeCount / totalCells) * 100);
 
         String text = String.format(
-                        "ECO DRWALE      Populacja: %d  |  Średni majątek: %d$\n\n" +
-                        "CHCIWI DRWALE   Populacja: %d  |  Średni majątek: %d$\n\n" +
-                        "POZIOM ZALESIENIA: %d%%",
+                        " ECO DRWALE     Populacja: %d  |  Średni majątek: %d$\n\n" +
+                        " CHCIWI DRWALE  Populacja: %d  |  Średni majątek: %d$\n\n" +
+                        " POZIOM ZALESIENIA: %d%%",
                 ecoCount, ecoAvg, greedyCount, greedyAvg, forestation
         );
 
         statsArea.setText(text);
+
+        exporter.logStats(sim.getTick(), ecoAvg, greedyAvg, forestation);
     }
 
     public void start() {

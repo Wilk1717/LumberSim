@@ -134,11 +134,15 @@ public class Simulation {
         return this.agents;
     }
 
+    public int getTick() {
+        return this.tick;
+    }
+
 
     public static void main(String[] args) {
         SimulationParameters defaultParams = new SimulationParameters();
 
-        Simulation sim = new Simulation(96, 54, defaultParams);
+        Simulation sim = new Simulation(100, 50, defaultParams);
         sim.setup();
 
         javax.swing.SwingUtilities.invokeLater(() -> {
