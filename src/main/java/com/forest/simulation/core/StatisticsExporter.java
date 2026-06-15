@@ -15,7 +15,7 @@ public class StatisticsExporter {
      * Przygotowuje plik do zapisu. Jeśli plik o podanej nazwie z poprzedniej
      * symulacji już istnieje, zostaje usunięty, aby zrobić miejsce na nowe dane.
      * Na samej górze pliku tworzone są nagłówki kolumn.
-     * * @param fileName Nazwa pliku docelowego (np. "statystyki_symulacji.txt").
+     * @param fileName Nazwa pliku docelowego (np. "statystyki_symulacji.txt").
      */
     public StatisticsExporter(String fileName) {
         this.fileName = fileName;
@@ -38,7 +38,7 @@ public class StatisticsExporter {
     /**
      * Zapisuje bieżące statystyki z pojedynczej tury (ticku) do pliku.
      * Metoda dopisuje nowy wiersz z danymi na samym końcu dokumentu.
-     * * @param tick Aktualna tura (czas) symulacji.
+     * @param tick Aktualna tura (czas) symulacji.
      * @param ecoAvg Średni kapitał wszystkich drwali ekologicznych.
      * @param greedyAvg Średni kapitał wszystkich chciwych drwali.
      * @param forestation Aktualny procent zalesienia planszy.

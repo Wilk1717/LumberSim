@@ -27,9 +27,8 @@ public class SimulationUI extends JFrame {
 
     /**
      * Inicjalizacja głównego okna symulacji.
-     * Ustawia parametry okna (rozmiar, układ), tworzy panel rysowania planszy
-     * i pole tekstowe ze statystykami. Konfiguruje również zegar (Timer)
-     * odświeżający stan symulacji co określoną liczbę milisekund.
+     * Ustawia parametry okna (rozmiar, układ), tworzy panel rysowania planszy i pole tekstowe ze statystykami.
+     * Konfiguruje również zegar (Timer) odświeżający stan symulacji co określoną liczbę milisekund.
      * @param sim Referencja do głównego obiektu symulacji zawierającego logikę.
      */
     public SimulationUI(Simulation sim) {
@@ -60,7 +59,7 @@ public class SimulationUI extends JFrame {
 
         add(statsArea, BorderLayout.SOUTH);
 
-        // Główna pętla napędzająca symulację .
+        // Główna pętla napędzająca symulację.
         timer = new Timer(250, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,14 +136,14 @@ public class SimulationUI extends JFrame {
     }
 
     /**
-     * Wewnętrzna klasa pełniąca rolę płótna do rysowania.
+     * Wewnętrzna klasa pełniąca funkcję płótna do rysowania.
      * Odpowiada za renderowanie siatki planszy, komórek z drzewami oraz agentów.
      */
     private class BoardPanel extends JPanel {
 
         /**
-         * Główna metoda rysująca biblioteki Swing. Wywoływana automatycznie
-         * przy każdym odświeżeniu (repaint) panelu.
+         * Główna metoda rysująca biblioteki Swing.
+         * Wywoływana automatycznie przy każdym odświeżeniu (repaint) panelu.
          * @param g Obiekt graficzny służący do rysowania kształtów i kolorów.
          */
         @Override
@@ -190,13 +189,13 @@ public class SimulationUI extends JFrame {
                 int ay = agent.getY() * cellHeight;
 
                 if (agent instanceof ForestRanger) {
-                    g.setColor(Color.BLUE); // Strażnik leśny - Niebieski
+                    g.setColor(Color.BLUE); // Strażnik leśny - niebieski
                     g.fillOval(ax + cellWidth/4, ay + cellHeight/4, cellWidth/2, cellHeight/2);
                 } else if (agent instanceof GreedyLumberjack) {
-                    g.setColor(Color.RED); // Chciwy drwal - Czerwony
+                    g.setColor(Color.RED); // Chciwy drwal - czerwony
                     g.fillOval(ax + cellWidth/4, ay + cellHeight/4, cellWidth/2, cellHeight/2);
                 } else if (agent instanceof EcologicalLumberjack) {
-                    g.setColor(Color.YELLOW); // Ekologiczny drwal - Żółty
+                    g.setColor(Color.YELLOW); // Ekologiczny drwal - żółty
                     g.fillOval(ax + cellWidth/4, ay + cellHeight/4, cellWidth/2, cellHeight/2);
                 }
             }

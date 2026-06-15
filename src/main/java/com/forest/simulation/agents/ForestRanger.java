@@ -6,8 +6,8 @@ import java.util.List;
 
 /**
  * Klasa strażnika leśnego.
- * Strażnik patroluje mapę i ściga chciwych drwali. Kiedy dogoni swój cel,
- * nakłada na niego karę finansową oraz czasowo blokuje możliwość ścinania drzew.
+ * Strażnik patroluje mapę i ściga chciwych drwali.
+ * Kiedy dogoni swój cel, nakłada na niego karę finansową oraz czasowo blokuje możliwość ścinania drzew.
  */
 public class ForestRanger extends Agent {
     private int patrolRange;
@@ -79,7 +79,7 @@ public class ForestRanger extends Agent {
 
                 int newDistance = board.calculateDistance(this.x, this.y, lockedTarget.getX(), lockedTarget.getY());
 
-                // Jeśli strażnik jest tuż obok celu - wlepia mandat.
+                // Jeśli strażnik jest tuż obok celu, wlepia mandat.
                 if (newDistance <= 1) {
                     lockedTarget.capital -= this.fineAmount;
                     lockedTarget.setCooldown(this.penaltyCooldown);
@@ -89,7 +89,7 @@ public class ForestRanger extends Agent {
                 }
             }
         } else {
-            // Brak celu w zasięgu - zwykły, losowy patrol.
+            // Jeśli nie ma celu w zasięgu, wykonuje zwykły, losowy patrol.
             moveRandomly();
         }
     }
