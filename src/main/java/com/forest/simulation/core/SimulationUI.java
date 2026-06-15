@@ -17,13 +17,13 @@ public class SimulationUI extends JFrame {
     private JTextArea statsArea;
     private Timer timer;
 
-    // 1. Deklaracja naszego eksportera
+
     private StatisticsExporter exporter;
 
     public SimulationUI(Simulation sim) {
         this.sim = sim;
 
-        // 2. Utworzenie obiektu eksportera i podanie nazwy pliku TXT
+
         this.exporter = new StatisticsExporter("statystyki_symulacji.txt");
 
         setTitle("Symulacja Lasu");
@@ -36,7 +36,7 @@ public class SimulationUI extends JFrame {
         boardPanel = new BoardPanel();
         add(boardPanel, BorderLayout.CENTER);
 
-        statsArea = new JTextArea(5, 50);
+        statsArea = new JTextArea(7, 50);
         statsArea.setEditable(false);
         statsArea.setFont(new Font("Monospaced", Font.BOLD, 22));
         statsArea.setBackground(new Color(25, 25, 25));
@@ -45,7 +45,7 @@ public class SimulationUI extends JFrame {
 
         add(statsArea, BorderLayout.SOUTH);
 
-        timer = new Timer(10, new ActionListener() {
+        timer = new Timer(250, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sim.step();
@@ -91,8 +91,9 @@ public class SimulationUI extends JFrame {
         String text = String.format(
                 "ECO DRWALE      Populacja: %d  |  Średni majątek: %d$\n\n" +
                         "CHCIWI DRWALE   Populacja: %d  |  Średni majątek: %d$\n\n" +
-                        "POZIOM ZALESIENIA: %d%%",
-                ecoCount, ecoAvg, greedyCount, greedyAvg, forestation
+                        "POZIOM ZALESIENIA: %d%%\n\n" +
+                        "TICK: %d",
+                ecoCount, ecoAvg, greedyCount, greedyAvg, forestation, sim.getTick()
         );
 
         statsArea.setText(text);
