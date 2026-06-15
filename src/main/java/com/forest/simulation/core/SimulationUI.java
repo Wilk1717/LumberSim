@@ -17,12 +17,10 @@ public class SimulationUI extends JFrame {
     private JTextArea statsArea;
     private Timer timer;
 
-
     private StatisticsExporter exporter;
 
     public SimulationUI(Simulation sim) {
         this.sim = sim;
-
 
         this.exporter = new StatisticsExporter("statystyki_symulacji.txt");
 

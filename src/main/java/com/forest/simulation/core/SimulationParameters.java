@@ -1,6 +1,8 @@
 package com.forest.simulation.core;
 
 public class SimulationParameters {
+    private static SimulationParameters instance;
+
     private int forestDensity = 50;
     private int regrowthTime = 8;
     private int penaltyCooldown = 15;
@@ -15,7 +17,14 @@ public class SimulationParameters {
     private int greedyCuttingRange = 1;
     private int rangerPatrolRange = 8;
 
-    public SimulationParameters() {}
+    private SimulationParameters() {}
+
+    public static SimulationParameters getInstance() {
+        if (instance == null) {
+            instance = new SimulationParameters();
+        }
+        return instance;
+    }
 
     public int getForestDensity() { return forestDensity; }
     public int getRegrowthTime() { return regrowthTime; }

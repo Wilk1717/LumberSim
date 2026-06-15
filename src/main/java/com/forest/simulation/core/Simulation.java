@@ -14,11 +14,11 @@ public class Simulation {
     private SimulationParameters params;
 
     //Konstruktor symulacji
-    public Simulation(int width, int height, SimulationParameters params) {
+    public Simulation(int width, int height) {
         this.board = new Board(width, height);
         this.agents = new ArrayList<>();
         this.tick = 0;
-        this.params = params;
+        this.params = SimulationParameters.getInstance();
     }
 
     //Rozpoczęcie symulacji
@@ -89,12 +89,10 @@ public class Simulation {
         }
         tick++;
     }
+
     public int getTick() {
         return this.tick;
     }
-
-
-
 
     public Board getBoard() {
         return this.board;
@@ -104,11 +102,8 @@ public class Simulation {
         return this.agents;
     }
 
-
     public static void main(String[] args) {
-        SimulationParameters defaultParams = new SimulationParameters();
-
-        Simulation sim = new Simulation(100, 50, defaultParams);
+        Simulation sim = new Simulation(100, 50);
         sim.setup();
 
         javax.swing.SwingUtilities.invokeLater(() -> {
