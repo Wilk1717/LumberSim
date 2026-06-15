@@ -4,14 +4,21 @@ import com.forest.simulation.core.Board;
 import com.forest.simulation.core.Cell;
 import java.util.Random;
 
+/**
+ * Abstrakcyjna klasa dla wszystkich agentów w symulacji.
+ */
 public abstract class Agent {
-    //Parametry agentów
     protected int x;
     protected int y;
     protected Board board;
     protected Random random;
 
-    //Konstruktor agenta
+    /**
+     * Stworzenie nowego agenta na mapie.
+     * @param startX Początkowa współrzędna X agenta.
+     * @param startY Początkowa współrzędna Y agenta.
+     * @param board Referencja do planszy symulacji.
+     */
     public Agent(int startX, int startY, Board board) {
         this.x = startX;
         this.y = startY;
@@ -19,10 +26,15 @@ public abstract class Agent {
         this.random = new Random();
     }
 
-    //Abstrakcyjna metoda logiki decyzyjnej agentów
+    /**
+     * Abstrakcyjna metoda logiki decyzyjnej agentów.
+     * Logika działania zdefiniowana w klasach dziedziczących.
+     */
     public abstract void findTarget();
 
-    //Wykonanie losowego kroku przez agenta
+    /**
+     * Wykonanie losowego kroku przez agenta w jednym z 8 kierunków.
+     */
     public void moveRandomly() {
         int dx, dy;
         do {
@@ -34,7 +46,11 @@ public abstract class Agent {
         this.y = board.wrapCoordinate(this.y + dy, board.getHeight());
     }
 
-    //Obliczenie najbliższej drogi do celu i wykonanie jednego kroku
+    /**
+     * Obliczenie najkrótszego wektora do celu i wykonanie jednego kroku.
+     * Algorytm bierze pod uwagę topologię torusa, aby wiedzieć, kiedy szybsza droga prowadzi przez krawędź ekranu.
+     * @param target Docelowa komórka, do której zmierza agent.
+     */
     public void moveToTarget(Cell target) {
         if (target == null) return;
 
@@ -55,7 +71,13 @@ public abstract class Agent {
         this.y = board.wrapCoordinate(this.y + stepY, board.getHeight());
     }
 
-    //Gettery
+    /**
+     * @return Aktualna współrzędna X agenta.
+     */
     public int getX() { return x; }
+
+    /**
+     * @return Aktualna współrzędna Y agenta.
+     */
     public int getY() { return y; }
 }
