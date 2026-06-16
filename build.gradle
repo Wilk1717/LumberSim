@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'org.example'
@@ -25,4 +26,8 @@ tasks.withType(JavaCompile) {
 
 javadoc {
     options.encoding = 'UTF-8'
+}
+
+application {
+    mainClass = 'com.forest.simulation.core.Simulation'
 }
