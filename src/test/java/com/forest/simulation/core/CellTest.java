@@ -14,7 +14,7 @@ public class CellTest {
         cell.chopDown(5);
 
         // Czy stan zmienił się na "Empty"?
-        assertEquals("Empty", cell.getState(), "Po ścięciu stan komórki powinien wynosić 'Empty'");
+        assertEquals("Empty", cell.getState());
     }
 
     @Test
@@ -25,11 +25,11 @@ public class CellTest {
         // Pierwszy tick odrastania
         cell.grow();
         // Drzewo jeszcze nie powinno odrosnąć
-        assertEquals("Empty", cell.getState(), "Po jednym ticku drzewo nie powinno jeszcze odrosnąć");
+        assertEquals("Empty", cell.getState());
 
         // Drugi tick odrastania (licznik spada do 0)
         cell.grow();
         // Drzewo powinno wrócić do stanu "Tree"
-        assertEquals("Tree", cell.getState(), "Po odczekaniu wymaganego czasu drzewo powinno powrócić do stanu 'Tree'");
+        assertEquals("Tree", cell.getState());
     }
 }

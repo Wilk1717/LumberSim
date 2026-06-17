@@ -14,19 +14,19 @@ public class LumberjackTest {
         EcologicalLumberjack lumberjack = new EcologicalLumberjack(0, 0, board, 3, 10, 5, 10, 6, 0);
 
         // Na początku drwal ma 10, więc nie jest bankrutem
-        assertFalse(lumberjack.checkBankruptcy(), "Drwal z dodatnim kapitałem nie powinien być bankrutem");
+        assertFalse(lumberjack.checkBankruptcy());
 
         // Drwal płaci za życie (10 - 6 = 4)
         lumberjack.payCosts();
 
         //  Zostało mu 4, nadal gra
-        assertFalse(lumberjack.checkBankruptcy(), "Drwal po pierwszej opłacie ma 4$, nadal nie jest bankrutem");
+        assertFalse(lumberjack.checkBankruptcy() );
 
         // Drwal znowu płaci za życie (4 - 6 = -2)
         lumberjack.payCosts();
 
         // Kapitał spadł poniżej zera, powinien być bankrutem
-        assertTrue(lumberjack.checkBankruptcy(), "Drwal z ujemnym kapitałem musi zostać uznany za bankruta");
+        assertTrue(lumberjack.checkBankruptcy());
     }
     @Test
     public void testHarvestingTreeIncreasesCapital() {
@@ -46,9 +46,9 @@ public class LumberjackTest {
         lumberjack.harvest(treeCell);
 
         // Kapitał drwala powinien wzrosnąć o 15 (z 10 na 25)
-        assertEquals(25, lumberjack.getCapital(), "Po ścięciu drzewa kapitał powinien wzrosnąć o jego wartość");
+        assertEquals(25, lumberjack.getCapital());
 
         // Upewniamy się, że przy okazji samo drzewo zniknęło
-        assertEquals("Empty", treeCell.getState(), "Drzewo po ścięciu powinno zmienić stan na 'Empty'");
+        assertEquals("Empty", treeCell.getState());
     }
 }
